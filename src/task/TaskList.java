@@ -4,6 +4,9 @@
  */
 package task;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +15,8 @@ import java.util.ArrayList;
  */
 public class TaskList {
     private static final ArrayList<String> taskList;
+    private static Connection conn = DBConnect.getConnection();
+    private static Statement stmt;
     
     static {
         taskList = new ArrayList<>();
@@ -42,20 +47,28 @@ public class TaskList {
     }
     
     /**
-     * Adds a new task to the taskList ArrayList
+     * Adds a new task to the taskList ArrayList and the database
      * @param task String task entered by the user
      * @return true if the task is added successfully else false
+     * @throws java.sql.SQLException
      */
-    public static boolean addTask(String task) {
+    public static boolean addTask(String task) throws SQLException {
+        stmt = conn.createStatement();
+        // INSERTING THE TASK IN THE TASK DATABASE
+        stmt.execute("INSERT INTO tasks VALUES('" + task + "')");
         return taskList.add(task);
     }
     
     /**
-     * Removes the Specified task from the taskList ArrayList
+     * Removes the Specified task from the taskList ArrayList and the database
      * @param task String task that the user Specifies to remove
      * @return true if the task is removed successfully else false
+     * @throws java.sql.SQLException
      */
-    public static boolean removeTask(String task) {
+    public static boolean removeTask(String task) throws SQLException {
+        stmt = conn.createStatement();
+        // INSERTING THE TASK IN THE TASK DATABASE
+        stmt.execute("DELETE FROM tasks WHERE task = '" + task + "'");
         return taskList.remove(task);
     }
     
