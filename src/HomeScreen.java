@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import task.DBConnect;
@@ -42,6 +40,8 @@ public class HomeScreen extends javax.swing.JFrame {
         
         initializeTaskList();
         initalizeTaskTable();
+        
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icox64.png")));
     }
 
     /**
@@ -56,6 +56,7 @@ public class HomeScreen extends javax.swing.JFrame {
         titlebarPnl = new javax.swing.JPanel();
         closeLbl = new javax.swing.JLabel();
         titleLbl = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         buttonsPnl = new javax.swing.JPanel();
         addTaskBtn = new javax.swing.JButton();
         deleteTaskBtn = new javax.swing.JButton();
@@ -99,22 +100,27 @@ public class HomeScreen extends javax.swing.JFrame {
         titleLbl.setFont(new java.awt.Font("Segoe Script", 0, 18)); // NOI18N
         titleLbl.setText("ToDo List");
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icox28.png"))); // NOI18N
+
         javax.swing.GroupLayout titlebarPnlLayout = new javax.swing.GroupLayout(titlebarPnl);
         titlebarPnl.setLayout(titlebarPnlLayout);
         titlebarPnlLayout.setHorizontalGroup(
             titlebarPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titlebarPnlLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(titleLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(closeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         titlebarPnlLayout.setVerticalGroup(
             titlebarPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titlebarPnlLayout.createSequentialGroup()
-                .addGroup(titlebarPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(closeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(titlebarPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(titleLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(closeLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -145,7 +151,7 @@ public class HomeScreen extends javax.swing.JFrame {
                 .addComponent(addTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(deleteTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         buttonsPnlLayout.setVerticalGroup(
             buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,6 +375,7 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JPanel buttonsPnl;
     private javax.swing.JLabel closeLbl;
     private javax.swing.JButton deleteTaskBtn;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane taskContainer;
     private javax.swing.JLabel titleLbl;
     private javax.swing.JPanel titlebarPnl;
