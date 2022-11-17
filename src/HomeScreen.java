@@ -191,6 +191,9 @@ public class HomeScreen extends javax.swing.JFrame {
             }
         };
         taskTable.setFont(new Font("Segoe Script", Font.PLAIN, 14));
+        taskTable.getTableHeader().setFont(new Font("Segoe Script", Font.BOLD, 16));
+        taskTable.getTableHeader().setOpaque(false);
+        taskTable.getTableHeader().setBackground(new Color(190, 190, 190));
         taskTable.setRowHeight(30);
         
         /**
