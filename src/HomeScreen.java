@@ -56,7 +56,7 @@ public class HomeScreen extends javax.swing.JFrame {
         titlebarPnl = new javax.swing.JPanel();
         closeLbl = new javax.swing.JLabel();
         titleLbl = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        titlebarIconLbl = new javax.swing.JLabel();
         buttonsPnl = new javax.swing.JPanel();
         addTaskBtn = new javax.swing.JButton();
         deleteTaskBtn = new javax.swing.JButton();
@@ -100,7 +100,7 @@ public class HomeScreen extends javax.swing.JFrame {
         titleLbl.setFont(new java.awt.Font("Segoe Script", 0, 18)); // NOI18N
         titleLbl.setText("ToDo List");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icox28.png"))); // NOI18N
+        titlebarIconLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icox28.png"))); // NOI18N
 
         javax.swing.GroupLayout titlebarPnlLayout = new javax.swing.GroupLayout(titlebarPnl);
         titlebarPnl.setLayout(titlebarPnlLayout);
@@ -108,7 +108,7 @@ public class HomeScreen extends javax.swing.JFrame {
             titlebarPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titlebarPnlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(titlebarIconLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(titleLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -120,7 +120,7 @@ public class HomeScreen extends javax.swing.JFrame {
                 .addGroup(titlebarPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(titleLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(closeLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(titlebarIconLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -375,9 +375,9 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JPanel buttonsPnl;
     private javax.swing.JLabel closeLbl;
     private javax.swing.JButton deleteTaskBtn;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane taskContainer;
     private javax.swing.JLabel titleLbl;
+    private javax.swing.JLabel titlebarIconLbl;
     private javax.swing.JPanel titlebarPnl;
     // End of variables declaration//GEN-END:variables
 }
