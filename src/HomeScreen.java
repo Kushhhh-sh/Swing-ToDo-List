@@ -3,6 +3,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import task.TaskList;
@@ -25,8 +28,6 @@ public class HomeScreen extends javax.swing.JFrame {
     private int mouseY;
     
     private JTable taskTable;
-    
-    private Connection conn;
 
     /**
      * Creates new form HomeScreen
@@ -34,7 +35,6 @@ public class HomeScreen extends javax.swing.JFrame {
     public HomeScreen() {
         initComponents();
         setLocation(Toolkit.getDefaultToolkit().getScreenSize().width / 2 - getWidth() / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2 - getHeight() / 2);      
-        conn = DBConnect.getConnection();
         
         intializeTaskTable();
     }
@@ -264,12 +264,16 @@ public class HomeScreen extends javax.swing.JFrame {
         
         if(! task.equals("")) {
             if(! TaskList.checkDuplicates(task)) {
-                if(TaskList.addTask(task))
-                    JOptionPane.showMessageDialog(this, "Task Added Successfully", "Add New Task", JOptionPane.INFORMATION_MESSAGE);
-                else
-                    JOptionPane.showMessageDialog(this, "Unexpected Error Occured while Adding the task", "Add New Task", JOptionPane.ERROR_MESSAGE);
-
-                intializeTaskTable();
+                try {
+                    if(TaskList.addTask(task))
+                        JOptionPane.showMessageDialog(this, "Task Added Successfully", "Add New Task", JOptionPane.INFORMATION_MESSAGE);
+                    else
+                        JOptionPane.showMessageDialog(this, "Unexpected Error Occured while Adding the task", "Add New Task", JOptionPane.ERROR_MESSAGE);
+                    
+                    intializeTaskTable();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "This Task already Exists!!!", "Add New Task", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -288,13 +292,17 @@ public class HomeScreen extends javax.swing.JFrame {
         if(selectedIndex == -1) {
             JOptionPane.showMessageDialog(this, "Please Select a Task to Delete", "Delete A Task", JOptionPane.ERROR_MESSAGE);
         } else {
-            String task = (String) taskTable.getValueAt(selectedIndex, 0);
-            if(TaskList.removeTask(task)) {
-                JOptionPane.showMessageDialog(this, "Task Deleted Successfully", "Delete A Task", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Unexpected Error Occured while Deleting the task", "Delete A Task", JOptionPane.ERROR_MESSAGE);
+            try {
+                String task = (String) taskTable.getValueAt(selectedIndex, 0);
+                if(TaskList.removeTask(task)) {
+                    JOptionPane.showMessageDialog(this, "Task Deleted Successfully", "Delete A Task", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Unexpected Error Occured while Deleting the task", "Delete A Task", JOptionPane.ERROR_MESSAGE);
+                }
+                intializeTaskTable();
+            } catch (SQLException ex) {
+                System.out.println(ex);
             }
-            intializeTaskTable();
         }
     }//GEN-LAST:event_deleteTaskBtnActionPerformed
 
