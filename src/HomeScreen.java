@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.sql.Connection;
 import javax.swing.JTable;
 
 /*
@@ -19,6 +20,8 @@ public class HomeScreen extends javax.swing.JFrame {
      */
     private int mouseX;
     private int mouseY;
+    
+    private Connection conn;
 
     /**
      * Creates new form HomeScreen
@@ -26,6 +29,7 @@ public class HomeScreen extends javax.swing.JFrame {
     public HomeScreen() {
         initComponents();
         setLocation(Toolkit.getDefaultToolkit().getScreenSize().width / 2 - getWidth() / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2 - getHeight() / 2);      
+        conn = DBConnect.getConnection();
     }
 
     /**
