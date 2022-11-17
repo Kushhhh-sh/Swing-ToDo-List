@@ -17,9 +17,24 @@ public class TaskList {
         taskList = new ArrayList<>();
     }
     
-    public void printAllTasks() {
+    public static void printAllTasks() {
         for (String next : taskList) {
             System.out.println(next);   
         }
+    }
+    
+    public static String[][] get2DArray() {
+        int size = taskList.size();
+        String[][] array = new String[size][];
+        
+        for(int i = 0; i < taskList.size(); i++) {
+            String[] arr = {taskList.get(i)};
+            array[i] = arr;
+        }
+        return array;
+    }
+    
+    public static boolean addTask(String task) {
+        return taskList.add(task);
     }
 }
