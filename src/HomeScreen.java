@@ -3,11 +3,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import task.DBConnect;
 import task.TaskList;
 
 /*
@@ -36,7 +40,8 @@ public class HomeScreen extends javax.swing.JFrame {
         initComponents();
         setLocation(Toolkit.getDefaultToolkit().getScreenSize().width / 2 - getWidth() / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2 - getHeight() / 2);      
         
-        intializeTaskTable();
+        initializeTaskList();
+        initalizeTaskTable();
     }
 
     /**
@@ -180,7 +185,7 @@ public class HomeScreen extends javax.swing.JFrame {
      * Initializes the JTable that contains all the tasks
      * Also useful for updating the table everytime a task is added or removed
      */
-    private void intializeTaskTable() {
+    private void initalizeTaskTable() {
         String[] head = {"Tasks"};
         taskTable = new JTable(TaskList.get2DArray(), head) {
             /**
@@ -200,6 +205,26 @@ public class HomeScreen extends javax.swing.JFrame {
          * Sets the ScrollPane to display the JTable
          */
         taskContainer.setViewportView(taskTable);
+    }
+    
+    /**
+     * Creates an ArrayList of String containing all the tasks from the database
+     * and initializes the taskList to that ArrayList to load the tasks from the database
+     */
+    private void initializeTaskList() {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            Connection conn = DBConnect.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Tasks");
+            while(rs.next())
+                list.add(rs.getString(1));
+            
+            TaskList.initializeTaskList(list);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
     }
     
     /**
@@ -270,7 +295,7 @@ public class HomeScreen extends javax.swing.JFrame {
                     else
                         JOptionPane.showMessageDialog(this, "Unexpected Error Occured while Adding the task", "Add New Task", JOptionPane.ERROR_MESSAGE);
                     
-                    intializeTaskTable();
+                    initalizeTaskTable();
                 } catch (SQLException ex) {
                     System.out.println(ex);
                 }
@@ -299,7 +324,7 @@ public class HomeScreen extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(this, "Unexpected Error Occured while Deleting the task", "Delete A Task", JOptionPane.ERROR_MESSAGE);
                 }
-                intializeTaskTable();
+                initalizeTaskTable();
             } catch (SQLException ex) {
                 System.out.println(ex);
             }

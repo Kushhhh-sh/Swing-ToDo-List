@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author Kush3
  */
 public class TaskList {
-    private static final ArrayList<String> taskList;
+    private static ArrayList<String> taskList;
     private static Connection conn = DBConnect.getConnection();
     private static Statement stmt;
     
@@ -84,5 +84,13 @@ public class TaskList {
             }
         }
         return false;
+    }
+    
+    /**
+     * This method initializes the taskList with a new ArrayList
+     * @param tasks ArrayList of tasks
+     */
+    public static void initializeTaskList(ArrayList<String> tasks) {
+        taskList = tasks;
     }
 }
