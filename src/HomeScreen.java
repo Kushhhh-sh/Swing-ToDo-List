@@ -45,6 +45,8 @@ public class HomeScreen extends javax.swing.JFrame {
         closeLbl = new javax.swing.JLabel();
         titleLbl = new javax.swing.JLabel();
         buttonsPnl = new javax.swing.JPanel();
+        addTaskBtn = new javax.swing.JButton();
+        deleteTaskBtn = new javax.swing.JButton();
         taskContainer = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -106,15 +108,31 @@ public class HomeScreen extends javax.swing.JFrame {
 
         buttonsPnl.setBackground(new java.awt.Color(238, 238, 238));
 
+        addTaskBtn.setFont(new java.awt.Font("Segoe Script", 0, 14)); // NOI18N
+        addTaskBtn.setText("Add Task");
+
+        deleteTaskBtn.setFont(new java.awt.Font("Segoe Script", 0, 14)); // NOI18N
+        deleteTaskBtn.setText("Delete Task");
+
         javax.swing.GroupLayout buttonsPnlLayout = new javax.swing.GroupLayout(buttonsPnl);
         buttonsPnl.setLayout(buttonsPnlLayout);
         buttonsPnlLayout.setHorizontalGroup(
             buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(buttonsPnlLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(addTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(deleteTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         buttonsPnlLayout.setVerticalGroup(
             buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 75, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsPnlLayout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
 
         taskContainer.setBackground(new java.awt.Color(238, 238, 238));
@@ -133,7 +151,7 @@ public class HomeScreen extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(titlebarPnl, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(taskContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+                .addComponent(taskContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(buttonsPnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -228,8 +246,10 @@ public class HomeScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addTaskBtn;
     private javax.swing.JPanel buttonsPnl;
     private javax.swing.JLabel closeLbl;
+    private javax.swing.JButton deleteTaskBtn;
     private javax.swing.JScrollPane taskContainer;
     private javax.swing.JLabel titleLbl;
     private javax.swing.JPanel titlebarPnl;
