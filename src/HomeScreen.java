@@ -125,6 +125,11 @@ public class HomeScreen extends javax.swing.JFrame {
 
         deleteTaskBtn.setFont(new java.awt.Font("Segoe Script", 0, 14)); // NOI18N
         deleteTaskBtn.setText("Delete Task");
+        deleteTaskBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteTaskBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout buttonsPnlLayout = new javax.swing.GroupLayout(buttonsPnl);
         buttonsPnl.setLayout(buttonsPnlLayout);
@@ -266,6 +271,25 @@ public class HomeScreen extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_addTaskBtnActionPerformed
+
+    /**
+     * Takes task selection from the JTable and then removes the task from the taskList
+     * @param evt 
+     */
+    private void deleteTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTaskBtnActionPerformed
+        int selectedIndex = taskTable.getSelectedRow();
+        if(selectedIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Please Select a Task to Delete", "Delete A Task", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String task = (String) taskTable.getValueAt(selectedIndex, 0);
+            if(TaskList.removeTask(task)) {
+                JOptionPane.showMessageDialog(this, "Task Deleted Successfully", "Delete A Task", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Unexpected Error Occured while Deleting the task", "Delete A Task", JOptionPane.ERROR_MESSAGE);
+            }
+            intializeTaskTable();
+        }
+    }//GEN-LAST:event_deleteTaskBtnActionPerformed
 
     /**
      * @param args the command line arguments
