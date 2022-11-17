@@ -257,15 +257,19 @@ public class HomeScreen extends javax.swing.JFrame {
      * @param evt 
      */
     private void addTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskBtnActionPerformed
-        String task = JOptionPane.showInputDialog(this, "Please Enter the Task", "Add New Task", JOptionPane.INFORMATION_MESSAGE);
+        String task = JOptionPane.showInputDialog(this, "Please Enter the Task", "Add New Task", JOptionPane.INFORMATION_MESSAGE).trim();
         
-        if(! task.trim().equals("")) {
-            if(TaskList.addTask(task))
-                JOptionPane.showMessageDialog(this, "Task Added Successfully", "Add New Task", JOptionPane.INFORMATION_MESSAGE);
-            else
-                JOptionPane.showMessageDialog(this, "Unexpected Error Occured while Adding the task", "Add New Task", JOptionPane.ERROR_MESSAGE);
+        if(! task.equals("")) {
+            if(! TaskList.checkDuplicates(task)) {
+                if(TaskList.addTask(task))
+                    JOptionPane.showMessageDialog(this, "Task Added Successfully", "Add New Task", JOptionPane.INFORMATION_MESSAGE);
+                else
+                    JOptionPane.showMessageDialog(this, "Unexpected Error Occured while Adding the task", "Add New Task", JOptionPane.ERROR_MESSAGE);
 
-            intializeTaskTable();
+                intializeTaskTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "This Task already Exists!!!", "Add New Task", JOptionPane.INFORMATION_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Please Enter a Task", "Add New Task", JOptionPane.ERROR_MESSAGE);
         }
