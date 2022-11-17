@@ -1,8 +1,11 @@
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.sql.Connection;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import task.TaskList;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,6 +24,8 @@ public class HomeScreen extends javax.swing.JFrame {
     private int mouseX;
     private int mouseY;
     
+    private JTable taskTable;
+    
     private Connection conn;
 
     /**
@@ -30,6 +35,8 @@ public class HomeScreen extends javax.swing.JFrame {
         initComponents();
         setLocation(Toolkit.getDefaultToolkit().getScreenSize().width / 2 - getWidth() / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2 - getHeight() / 2);      
         conn = DBConnect.getConnection();
+        
+        intializeTaskTable();
     }
 
     /**
@@ -110,6 +117,11 @@ public class HomeScreen extends javax.swing.JFrame {
 
         addTaskBtn.setFont(new java.awt.Font("Segoe Script", 0, 14)); // NOI18N
         addTaskBtn.setText("Add Task");
+        addTaskBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTaskBtnActionPerformed(evt);
+            }
+        });
 
         deleteTaskBtn.setFont(new java.awt.Font("Segoe Script", 0, 14)); // NOI18N
         deleteTaskBtn.setText("Delete Task");
@@ -159,6 +171,29 @@ public class HomeScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Initializes the JTable that contains all the tasks
+     * Also useful for updating the table everytime a task is added or removed
+     */
+    private void intializeTaskTable() {
+        String[] head = {"Tasks"};
+        taskTable = new JTable(TaskList.get2DArray(), head) {
+            /**
+             * Overidden method to disable the Cell editing for the JTable
+             */
+            public boolean editCellAt(int row, int column, java.util.EventObject e) {
+                return false;
+            }
+        };
+        taskTable.setFont(new Font("Segoe Script", Font.PLAIN, 14));
+        taskTable.setRowHeight(30);
+        
+        /**
+         * Sets the ScrollPane to display the JTable
+         */
+        taskContainer.setViewportView(taskTable);
+    }
+    
     /**
      * *****************************************************
      * ****************** EVENT HANDLING *******************
@@ -211,6 +246,26 @@ public class HomeScreen extends javax.swing.JFrame {
     private void closeLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeLblMouseClicked
         System.exit(1);
     }//GEN-LAST:event_closeLblMouseClicked
+
+    /**
+     * Takes Input of the task from the User and then adds that task to the taskList
+     * @param evt 
+     */
+    private void addTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskBtnActionPerformed
+        String task = JOptionPane.showInputDialog(this, "Please Enter the Task", "Add New Task", JOptionPane.INFORMATION_MESSAGE);
+        
+        if(! task.trim().equals("")) {
+            if(TaskList.addTask(task))
+                JOptionPane.showMessageDialog(this, "Task Added Successfully", "Add New Task", JOptionPane.INFORMATION_MESSAGE);
+            else
+                JOptionPane.showMessageDialog(this, "Unexpected Error Occured while Adding the task", "Add New Task", JOptionPane.ERROR_MESSAGE);
+
+            intializeTaskTable();
+        } else {
+            JOptionPane.showMessageDialog(this, "Please Enter a Task", "Add New Task", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_addTaskBtnActionPerformed
 
     /**
      * @param args the command line arguments
