@@ -58,4 +58,18 @@ public class TaskList {
     public static boolean removeTask(String task) {
         return taskList.remove(task);
     }
+    
+    /**
+     * Checks if the taskList already contains a particular task
+     * @param task The task to run duplicacy check on
+     * @return true if there is a duplicate else false
+     */
+    public static boolean checkDuplicates(String task) {
+        for(String next : taskList) {
+            if(next.equalsIgnoreCase(task)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
