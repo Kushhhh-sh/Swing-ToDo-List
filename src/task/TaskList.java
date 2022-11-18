@@ -72,6 +72,10 @@ public class TaskList {
         return taskList.remove(task);
     }
     
+    /**
+     * Removes all the Tasks from the taskList ArrayList and the database
+     * @throws SQLException 
+     */
     public static void removeAllTasks() throws SQLException {
         stmt = conn.createStatement();
         stmt.execute("DELETE FROM tasks");

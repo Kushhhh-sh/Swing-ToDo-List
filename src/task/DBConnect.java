@@ -13,10 +13,14 @@ import javax.swing.JOptionPane;
  */
 
 /**
- *
+ * 
  * @author Kush3
  */
 public class DBConnect {
+    /**
+     * Creates a Connection to the database and creates the required tables if they don't exist
+     * @return reference to the Connection Object of the Database
+     */
     public static Connection getConnection() {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlite:tasks.db");
