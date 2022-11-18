@@ -2,11 +2,16 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import task.DBConnect;
@@ -35,6 +40,7 @@ public class HomeScreen extends javax.swing.JFrame {
      * Creates new form HomeScreen
      */
     public HomeScreen() {
+        super("ToDo List");
         initComponents();
         setLocation(Toolkit.getDefaultToolkit().getScreenSize().width / 2 - getWidth() / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2 - getHeight() / 2);      
         
@@ -53,20 +59,23 @@ public class HomeScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        optionsPopup = new javax.swing.JPopupMenu();
         titlebarPnl = new javax.swing.JPanel();
         closeLbl = new javax.swing.JLabel();
         titleLbl = new javax.swing.JLabel();
         titlebarIconLbl = new javax.swing.JLabel();
+        optionsLbl = new javax.swing.JLabel();
         buttonsPnl = new javax.swing.JPanel();
         addTaskBtn = new javax.swing.JButton();
         deleteTaskBtn = new javax.swing.JButton();
+        clearAllBtn = new javax.swing.JButton();
         taskContainer = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setResizable(false);
 
         titlebarPnl.setBackground(new java.awt.Color(238, 238, 238));
+        titlebarPnl.setPreferredSize(new java.awt.Dimension(172, 45));
         titlebarPnl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 titlebarPnlMouseDragged(evt);
@@ -79,7 +88,7 @@ public class HomeScreen extends javax.swing.JFrame {
         });
 
         closeLbl.setBackground(new java.awt.Color(238, 238, 238));
-        closeLbl.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        closeLbl.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
         closeLbl.setForeground(new java.awt.Color(51, 51, 51));
         closeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         closeLbl.setText("X");
@@ -102,26 +111,34 @@ public class HomeScreen extends javax.swing.JFrame {
 
         titlebarIconLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icox28.png"))); // NOI18N
 
+        optionsLbl.setBackground(new java.awt.Color(238, 238, 238));
+        optionsLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        optionsLbl.setForeground(new java.awt.Color(51, 51, 51));
+        optionsLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        optionsLbl.setText("•••");
+        optionsLbl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        optionsLbl.setOpaque(true);
+
         javax.swing.GroupLayout titlebarPnlLayout = new javax.swing.GroupLayout(titlebarPnl);
         titlebarPnl.setLayout(titlebarPnlLayout);
         titlebarPnlLayout.setHorizontalGroup(
             titlebarPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titlebarPnlLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(titlebarIconLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(titleLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(closeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(optionsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(closeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         titlebarPnlLayout.setVerticalGroup(
             titlebarPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titlebarPnlLayout.createSequentialGroup()
-                .addGroup(titlebarPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(titleLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(closeLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(titlebarIconLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(titlebarIconLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(titleLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+            .addComponent(closeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(optionsLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         buttonsPnl.setBackground(new java.awt.Color(238, 238, 238));
@@ -142,25 +159,40 @@ public class HomeScreen extends javax.swing.JFrame {
             }
         });
 
+        clearAllBtn.setFont(new java.awt.Font("Segoe Script", 0, 14)); // NOI18N
+        clearAllBtn.setText("Clear All");
+        clearAllBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearAllBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonsPnlLayout = new javax.swing.GroupLayout(buttonsPnl);
         buttonsPnl.setLayout(buttonsPnlLayout);
         buttonsPnlLayout.setHorizontalGroup(
             buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonsPnlLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(addTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
-                .addComponent(deleteTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE)
+                .addGroup(buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsPnlLayout.createSequentialGroup()
+                        .addComponent(addTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
+                        .addComponent(deleteTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsPnlLayout.createSequentialGroup()
+                        .addComponent(clearAllBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(133, 133, 133))))
         );
         buttonsPnlLayout.setVerticalGroup(
             buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsPnlLayout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+            .addGroup(buttonsPnlLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
                 .addGroup(buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(deleteTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(clearAllBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         taskContainer.setBackground(new java.awt.Color(238, 238, 238));
@@ -170,16 +202,16 @@ public class HomeScreen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titlebarPnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(titlebarPnl, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
             .addComponent(buttonsPnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(taskContainer)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(titlebarPnl, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(titlebarPnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(taskContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+                .addComponent(taskContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(buttonsPnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -197,6 +229,7 @@ public class HomeScreen extends javax.swing.JFrame {
             /**
              * Overidden method to disable the Cell editing for the JTable
              */
+            @Override
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 return false;
             }
@@ -338,6 +371,17 @@ public class HomeScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteTaskBtnActionPerformed
 
+    private void clearAllBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllBtnActionPerformed
+        try {
+            TaskList.removeAllTasks();
+            JOptionPane.showMessageDialog(this, "All Tasks Deleted Successfuly", "Clear All Tasks", JOptionPane.INFORMATION_MESSAGE);
+            initalizeTaskTable();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+    }//GEN-LAST:event_clearAllBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -374,8 +418,11 @@ public class HomeScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addTaskBtn;
     private javax.swing.JPanel buttonsPnl;
+    private javax.swing.JButton clearAllBtn;
     private javax.swing.JLabel closeLbl;
     private javax.swing.JButton deleteTaskBtn;
+    private javax.swing.JLabel optionsLbl;
+    private javax.swing.JPopupMenu optionsPopup;
     private javax.swing.JScrollPane taskContainer;
     private javax.swing.JLabel titleLbl;
     private javax.swing.JLabel titlebarIconLbl;

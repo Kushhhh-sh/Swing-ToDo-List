@@ -72,6 +72,12 @@ public class TaskList {
         return taskList.remove(task);
     }
     
+    public static void removeAllTasks() throws SQLException {
+        stmt = conn.createStatement();
+        stmt.execute("DELETE FROM tasks");
+        taskList.clear();
+    }
+    
     /**
      * Checks if the taskList already contains a particular task
      * @param task The task to run duplicacy check on
