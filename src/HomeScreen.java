@@ -33,6 +33,8 @@ public class HomeScreen extends javax.swing.JFrame {
      */
     private int mouseX;
     private int mouseY;
+    private int windowX;
+    private int windowY;
     
     private JTable taskTable;
 
@@ -46,6 +48,7 @@ public class HomeScreen extends javax.swing.JFrame {
         
         initializeTaskList();
         initalizeTaskTable();
+        initializeOptionsPopup();
         
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icox64.png")));
     }
@@ -118,6 +121,11 @@ public class HomeScreen extends javax.swing.JFrame {
         optionsLbl.setText("•••");
         optionsLbl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         optionsLbl.setOpaque(true);
+        optionsLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                optionsLblMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout titlebarPnlLayout = new javax.swing.GroupLayout(titlebarPnl);
         titlebarPnl.setLayout(titlebarPnlLayout);
@@ -144,6 +152,7 @@ public class HomeScreen extends javax.swing.JFrame {
         buttonsPnl.setBackground(new java.awt.Color(238, 238, 238));
 
         addTaskBtn.setFont(new java.awt.Font("Segoe Script", 0, 14)); // NOI18N
+        addTaskBtn.setMnemonic('a');
         addTaskBtn.setText("Add Task");
         addTaskBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,6 +161,7 @@ public class HomeScreen extends javax.swing.JFrame {
         });
 
         deleteTaskBtn.setFont(new java.awt.Font("Segoe Script", 0, 14)); // NOI18N
+        deleteTaskBtn.setMnemonic('d');
         deleteTaskBtn.setText("Delete Task");
         deleteTaskBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,6 +170,7 @@ public class HomeScreen extends javax.swing.JFrame {
         });
 
         clearAllBtn.setFont(new java.awt.Font("Segoe Script", 0, 14)); // NOI18N
+        clearAllBtn.setMnemonic('c');
         clearAllBtn.setText("Clear All");
         clearAllBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -268,6 +279,17 @@ public class HomeScreen extends javax.swing.JFrame {
     }
     
     /**
+     * Initializes the Popup menu with the JMenuItems
+     */
+    private void initializeOptionsPopup() {
+        JMenuItem importItem = new JMenuItem("Import");
+        JMenuItem exportItem = new JMenuItem("Export");
+        
+        optionsPopup.add(importItem);
+        optionsPopup.add(exportItem);
+    }
+    
+    /**
      * *****************************************************
      * ****************** EVENT HANDLING *******************
      * *****************************************************
@@ -371,6 +393,10 @@ public class HomeScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteTaskBtnActionPerformed
 
+    /**
+     * Deletes all the tasks from the taskList and Refreshes the JTable
+     * @param evt
+     */
     private void clearAllBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllBtnActionPerformed
         try {
             TaskList.removeAllTasks();
@@ -381,6 +407,12 @@ public class HomeScreen extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_clearAllBtnActionPerformed
+
+    private void optionsLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_optionsLblMouseClicked
+
+        optionsPopup.show(this, 300, 45);
+                
+    }//GEN-LAST:event_optionsLblMouseClicked
 
     /**
      * @param args the command line arguments
