@@ -206,6 +206,7 @@ public class HomeScreen extends javax.swing.JFrame {
         taskTable.getTableHeader().setOpaque(false);
         taskTable.getTableHeader().setBackground(new Color(190, 190, 190));
         taskTable.setRowHeight(30);
+        taskTable.setAutoCreateRowSorter(true);
         
         /**
          * Sets the ScrollPane to display the JTable
