@@ -414,6 +414,10 @@ public class HomeScreen extends javax.swing.JFrame {
         
     }//GEN-LAST:event_clearAllBtnActionPerformed
 
+    /**
+     * Display the Options for Backing up and Restoring the Database
+     * @param evt 
+     */
     private void optionsLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_optionsLblMouseClicked
         optionsPopup.show(this, 300, 45);               
     }//GEN-LAST:event_optionsLblMouseClicked
