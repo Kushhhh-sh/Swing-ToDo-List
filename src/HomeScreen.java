@@ -2,8 +2,6 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -287,30 +285,37 @@ public class HomeScreen extends javax.swing.JFrame {
     
     /**
      * Initializes the Popup menu with the JMenuItems
+     * 
+     * @see performBackupOperation()
+     * @see performRestoreOperation()
      */
     private void initializeOptionsPopup() {
         JMenuItem backupItem = new JMenuItem("Backup");
         JMenuItem restoreItem = new JMenuItem("Restore");
         
-        backupItem.addActionListener(e -> {
-            System.out.println("Import Button Clickes..!!");
-            performBackupOperation();
-        });
+        backupItem.addActionListener(e -> performBackupOperation());
         
-        restoreItem.addActionListener(e -> {
-            System.out.println("Export Button Clicked..!!");
-        });
+        restoreItem.addActionListener(e -> performRestoreOperation());
         
         optionsPopup.add(backupItem);
         optionsPopup.add(restoreItem);
     }
     
+    /**
+     * Initializes the JFileChooser to Accept only '.db' Files
+     */
     private void initializeFileChooser() {
         fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("Database File", "db"));
         fileChooser.setAcceptAllFileFilterUsed(false);
     }
     
+    /**
+     * Shows the JFileChooser in Save mode and Accepts a destination File
+     * Then calls the copyFile() to Copy the db file to the destination File
+     * 
+     * @see copyFile()
+     */
     private void performBackupOperation() {
         fileChooser.setSelectedFile(new File("test.db"));
         if(fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) { 
@@ -325,6 +330,33 @@ public class HomeScreen extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Shows the JFileChooser in Open mode and Accepts a source File
+     * Then calls the copyFile() to copy the accepted file to the db File
+     * 
+     * @see copyFile()
+     * @see initializeTaskList()
+     * @see initalizeTaskTable()
+     */
+    private void performRestoreOperation() {
+        if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            try {
+                File source = fileChooser.getSelectedFile();
+                copyFile(source, new File("tasks.db"));
+                initializeTaskList();
+                initalizeTaskTable();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(HomeScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    /**
+     * Copies the source File to the destination File using byte stream
+     * @param source The File which is to be copied
+     * @param destination The file where the source File is copied
+     * @throws FileNotFoundException 
+     */
     private void copyFile(File source, File destination) throws FileNotFoundException {
         try(FileInputStream fin = new FileInputStream(source); FileOutputStream fout = new FileOutputStream(destination);) {
             int character;
@@ -334,6 +366,7 @@ public class HomeScreen extends javax.swing.JFrame {
             System.out.println(ex);
         }
     }
+    
     /**
      * *****************************************************
      * ****************** EVENT HANDLING *******************
