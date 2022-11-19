@@ -280,11 +280,19 @@ public class HomeScreen extends javax.swing.JFrame {
      * Initializes the Popup menu with the JMenuItems
      */
     private void initializeOptionsPopup() {
-        JMenuItem importItem = new JMenuItem("Import");
-        JMenuItem exportItem = new JMenuItem("Export");
+        JMenuItem backupItem = new JMenuItem("Backup");
+        JMenuItem restoreItem = new JMenuItem("Restore");
         
-        optionsPopup.add(importItem);
-        optionsPopup.add(exportItem);
+        backupItem.addActionListener(e -> {
+            System.out.println("Import Button Clickes..!!");
+        });
+        
+        restoreItem.addActionListener(e -> {
+            System.out.println("Export Button Clicked..!!");
+        });
+        
+        optionsPopup.add(backupItem);
+        optionsPopup.add(restoreItem);
     }
     
     /**
