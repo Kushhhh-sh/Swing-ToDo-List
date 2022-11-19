@@ -4,6 +4,11 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,9 +16,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import task.DBConnect;
 import task.TaskList;
 
@@ -35,6 +42,7 @@ public class HomeScreen extends javax.swing.JFrame {
     private int mouseY;
     
     private JTable taskTable;
+    private JFileChooser fileChooser;
 
     /**
      * Creates new form HomeScreen
@@ -43,10 +51,11 @@ public class HomeScreen extends javax.swing.JFrame {
         super("ToDo List");
         initComponents();
         setLocation(Toolkit.getDefaultToolkit().getScreenSize().width / 2 - getWidth() / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2 - getHeight() / 2);      
-        
+         
         initializeTaskList();
         initalizeTaskTable();
         initializeOptionsPopup();
+        initializeFileChooser();
         
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icox64.png")));
     }
@@ -285,6 +294,7 @@ public class HomeScreen extends javax.swing.JFrame {
         
         backupItem.addActionListener(e -> {
             System.out.println("Import Button Clickes..!!");
+            performBackupOperation();
         });
         
         restoreItem.addActionListener(e -> {
@@ -295,6 +305,35 @@ public class HomeScreen extends javax.swing.JFrame {
         optionsPopup.add(restoreItem);
     }
     
+    private void initializeFileChooser() {
+        fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Database File", "db"));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+    }
+    
+    private void performBackupOperation() {
+        fileChooser.setSelectedFile(new File("test.db"));
+        if(fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) { 
+            String file = fileChooser.getSelectedFile().getAbsolutePath();
+            if(! fileChooser.getSelectedFile().getName().contains(".db"))
+                file += ".db";
+            try {
+                copyFile(new File("tasks.db"), new File(file));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(HomeScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    private void copyFile(File source, File destination) throws FileNotFoundException {
+        try(FileInputStream fin = new FileInputStream(source); FileOutputStream fout = new FileOutputStream(destination);) {
+            int character;
+            while((character = fin.read()) != -1)
+                fout.write(character);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
     /**
      * *****************************************************
      * ****************** EVENT HANDLING *******************
