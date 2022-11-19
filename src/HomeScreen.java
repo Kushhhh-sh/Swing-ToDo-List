@@ -33,8 +33,6 @@ public class HomeScreen extends javax.swing.JFrame {
      */
     private int mouseX;
     private int mouseY;
-    private int windowX;
-    private int windowY;
     
     private JTable taskTable;
 
@@ -409,9 +407,7 @@ public class HomeScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_clearAllBtnActionPerformed
 
     private void optionsLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_optionsLblMouseClicked
-
-        optionsPopup.show(this, 300, 45);
-                
+        optionsPopup.show(this, 300, 45);               
     }//GEN-LAST:event_optionsLblMouseClicked
 
     /**
