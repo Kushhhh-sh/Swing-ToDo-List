@@ -306,7 +306,7 @@ public class HomeScreen extends javax.swing.JFrame {
      */
     private void initializeFileChooser() {
         fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Database File", "db"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Database Files (*.db)", "db"));
         fileChooser.setAcceptAllFileFilterUsed(false);
     }
     
