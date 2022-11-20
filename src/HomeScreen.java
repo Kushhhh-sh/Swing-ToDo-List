@@ -43,7 +43,16 @@ public class HomeScreen extends javax.swing.JFrame {
     private JFileChooser fileChooser;
 
     /**
-     * Creates new form HomeScreen
+     * Creates new form HomeScreen and initializes all the components
+     * Also sets the Location of the window to the center of the screen
+     * Sets the Icon of the Application
+     * 
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/awt/Window.html#setLocation(int,%20int)">setLocation()</a>
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/javax/swing/JFrame.html#setIconImage(java.awt.Image)">setIconImage()</a>
+     * @see <a href="#initializeTaskList--">initializeTaskList()</a>
+     * @see <a href="#initalizeTaskTable--">initalizeTaskTable()</a>
+     * @see <a href="#initializeOptionsPopup--">initializeOptionsPopup()</a>
+     * @see <a href="#initializeFileChooser--">initializeFileChooser()</a>
      */
     public HomeScreen() {
         super("ToDo List");
@@ -238,6 +247,8 @@ public class HomeScreen extends javax.swing.JFrame {
     /**
      * Initializes the JTable that contains all the tasks
      * Also useful for updating the table everytime a task is added or removed
+     * 
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/javax/swing/JTable.html">JTable</a>
      */
     private void initalizeTaskTable() {
         String[] head = {"Tasks"};
@@ -266,6 +277,8 @@ public class HomeScreen extends javax.swing.JFrame {
     /**
      * Creates an ArrayList of String containing all the tasks from the database
      * and initializes the taskList to that ArrayList to load the tasks from the database
+     * 
+     * @see <a href="task/TaskList.html#initializeTaskList-java.util.ArrayList-">TaskList.initializeTaskList()</a>
      */
     private void initializeTaskList() {
         ArrayList<String> list = new ArrayList<>();
@@ -288,6 +301,8 @@ public class HomeScreen extends javax.swing.JFrame {
      * 
      * @see performBackupOperation()
      * @see performRestoreOperation()
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/javax/swing/JPopupMenu.html">JPopupMenu</a>
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/javax/swing/JMenuItem.html">JMenuItem</a>
      */
     private void initializeOptionsPopup() {
         JMenuItem backupItem = new JMenuItem("Backup");
@@ -303,6 +318,8 @@ public class HomeScreen extends javax.swing.JFrame {
     
     /**
      * Initializes the JFileChooser to Accept only '.db' Files
+     * 
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/javax/swing/JFileChooser.html">JFileChooser</a>
      */
     private void initializeFileChooser() {
         fileChooser = new JFileChooser();
@@ -314,7 +331,8 @@ public class HomeScreen extends javax.swing.JFrame {
      * Shows the JFileChooser in Save mode and Accepts a destination File
      * Then calls the copyFile() to Copy the db file to the destination File
      * 
-     * @see copyFile()
+     * @see <a href="#copyFile-java.io.File-java.io.File-">copyFile()</a>
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/javax/swing/JFileChooser.html">JFileChooser</a>
      */
     private void performBackupOperation() {
         fileChooser.setSelectedFile(new File("test.db"));
@@ -334,7 +352,7 @@ public class HomeScreen extends javax.swing.JFrame {
      * Shows the JFileChooser in Open mode and Accepts a source File
      * Then calls the copyFile() to copy the accepted file to the db File
      * 
-     * @see copyFile()
+     * @see <a href="#copyFile-java.io.File-java.io.File-">copyFile()</a>
      * @see initializeTaskList()
      * @see initalizeTaskTable()
      */
@@ -355,7 +373,10 @@ public class HomeScreen extends javax.swing.JFrame {
      * Copies the source File to the destination File using byte stream
      * @param source The File which is to be copied
      * @param destination The file where the source File is copied
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException If the Source or Destination File is not found
+     * 
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileInputStream.html">FileInputStream</a>
+     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileOutputStream.html">FileOutputStream</a>
      */
     private void copyFile(File source, File destination) throws FileNotFoundException {
         try(FileInputStream fin = new FileInputStream(source); FileOutputStream fout = new FileOutputStream(destination);) {
@@ -396,7 +417,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
     /**
      * Sets the background and Foreground color of close button back to default
-     * @param evt 
+     * @param evt The MouseEvent Object generated on pressing the mouse
      */
     private void closeLblMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeLblMouseExited
         closeLbl.setBackground(new Color(238, 238, 238));
@@ -405,7 +426,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
     /**
      * Sets the close button's background to red and foreground to white on mouse entering
-     * @param evt 
+     * @param evt The MouseEvent Object generated on pressing the mouse
      */
     private void closeLblMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeLblMouseEntered
         closeLbl.setBackground(Color.red);
@@ -414,7 +435,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
     /**
      * Terminates the program on click
-     * @param evt 
+     * @param evt The MouseEvent Object generated on pressing the mouse
      */
     private void closeLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeLblMouseClicked
         System.exit(1);
@@ -422,7 +443,12 @@ public class HomeScreen extends javax.swing.JFrame {
 
     /**
      * Takes Input of the task from the User and then adds that task to the taskList
-     * @param evt 
+     * @param evt The MouseEvent Object generated on pressing the mouse
+     * 
+     * @see <a href="task/TaskList.html#checkDuplicates-java.lang.String-">TaskList.checkDuplicates()</a>
+     * @see <a href="#initalizeTaskTable--">initalizeTaskTable()</a>
+     * @see <a href="task/TaskList.html#addTask-java.lang.String-">TaskList.addTask()</a>
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/javax/swing/JOptionPane.html">JOptionPane</a>
      */
     private void addTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskBtnActionPerformed
         String task = JOptionPane.showInputDialog(this, "Please Enter the Task", "Add New Task", JOptionPane.INFORMATION_MESSAGE).trim();
@@ -450,7 +476,12 @@ public class HomeScreen extends javax.swing.JFrame {
 
     /**
      * Takes task selection from the JTable and then removes the task from the taskList
-     * @param evt 
+     * @param evt The MouseEvent Object generated on pressing the mouse
+     * 
+     * @see <a href="#initalizeTaskTable--">initalizeTaskTable()</a>
+     * @see <a href="task/TaskList.html#removeTask-java.lang.String-">TaskList.removeTask()</a>
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/javax/swing/JOptionPane.html">JOptionPane</a>
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/javax/swing/JTable.html">JTable</a>
      */
     private void deleteTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTaskBtnActionPerformed
         int selectedIndex = taskTable.getSelectedRow();
@@ -473,7 +504,10 @@ public class HomeScreen extends javax.swing.JFrame {
 
     /**
      * Deletes all the tasks from the taskList and Refreshes the JTable
-     * @param evt
+     * @param evt The MouseEvent Object generated on pressing the mouse
+     * 
+     * @see <a href="#initalizeTaskTable--">initalizeTaskTable()</a>
+     * @see <a href="task/TaskList.html#removeAllTasks--">TaskList.removeAllTasks()</a>
      */
     private void clearAllBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllBtnActionPerformed
         try {
@@ -488,7 +522,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
     /**
      * Display the Options for Backing up and Restoring the Database
-     * @param evt 
+     * @param evt The MouseEvent Object generated on pressing the mouse
      */
     private void optionsLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_optionsLblMouseClicked
         optionsPopup.show(this, 300, 45);               
