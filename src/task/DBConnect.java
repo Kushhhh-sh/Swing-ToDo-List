@@ -20,6 +20,10 @@ public class DBConnect {
     /**
      * Creates a Connection to the database and creates the required tables if they don't exist
      * @return reference to the Connection Object of the Database
+     * 
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html">Statement</a>
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/javax/swing/JOptionPane.html">JOptionPane</a>
      */
     public static Connection getConnection() {
         try {
