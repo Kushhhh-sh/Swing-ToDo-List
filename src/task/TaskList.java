@@ -51,6 +51,9 @@ public class TaskList {
      * @param task String task entered by the user
      * @return true if the task is added successfully else false
      * @throws java.sql.SQLException
+     * 
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html">Statement</a>
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>
      */
     public static boolean addTask(String task) throws SQLException {
         stmt = conn.createStatement();
@@ -64,6 +67,9 @@ public class TaskList {
      * @param task String task that the user Specifies to remove
      * @return true if the task is removed successfully else false
      * @throws java.sql.SQLException
+     * 
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html">Statement</a>
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>
      */
     public static boolean removeTask(String task) throws SQLException {
         stmt = conn.createStatement();
@@ -75,6 +81,9 @@ public class TaskList {
     /**
      * Removes all the Tasks from the taskList ArrayList and the database
      * @throws SQLException 
+     * 
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html">Statement</a>
+     * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html">Connection</a>
      */
     public static void removeAllTasks() throws SQLException {
         stmt = conn.createStatement();
