@@ -123,7 +123,7 @@ public class HomeScreen extends javax.swing.JFrame {
             }
         });
 
-        titleLbl.setFont(new java.awt.Font("Segoe Script", 0, 18)); // NOI18N
+        titleLbl.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         titleLbl.setText("ToDo List");
 
         titlebarIconLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icox28.png"))); // NOI18N
@@ -165,7 +165,7 @@ public class HomeScreen extends javax.swing.JFrame {
 
         buttonsPnl.setBackground(new java.awt.Color(238, 238, 238));
 
-        addTaskBtn.setFont(new java.awt.Font("Segoe Script", 0, 14)); // NOI18N
+        addTaskBtn.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         addTaskBtn.setMnemonic('a');
         addTaskBtn.setText("Add Task");
         addTaskBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -174,7 +174,7 @@ public class HomeScreen extends javax.swing.JFrame {
             }
         });
 
-        deleteTaskBtn.setFont(new java.awt.Font("Segoe Script", 0, 14)); // NOI18N
+        deleteTaskBtn.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         deleteTaskBtn.setMnemonic('d');
         deleteTaskBtn.setText("Delete Task");
         deleteTaskBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -183,7 +183,7 @@ public class HomeScreen extends javax.swing.JFrame {
             }
         });
 
-        clearAllBtn.setFont(new java.awt.Font("Segoe Script", 0, 14)); // NOI18N
+        clearAllBtn.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         clearAllBtn.setMnemonic('c');
         clearAllBtn.setText("Clear All");
         clearAllBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -261,8 +261,8 @@ public class HomeScreen extends javax.swing.JFrame {
                 return false;
             }
         };
-        taskTable.setFont(new Font("Segoe Script", Font.PLAIN, 14));
-        taskTable.getTableHeader().setFont(new Font("Segoe Script", Font.BOLD, 16));
+        taskTable.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
+        taskTable.getTableHeader().setFont(new Font("Comic Sans MS", Font.BOLD, 20));
         taskTable.getTableHeader().setOpaque(false);
         taskTable.getTableHeader().setBackground(new Color(190, 190, 190));
         taskTable.setRowHeight(30);
