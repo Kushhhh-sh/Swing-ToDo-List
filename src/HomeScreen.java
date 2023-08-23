@@ -550,7 +550,7 @@ public class HomeScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please Select a Task to Edit!", "Edit Task", JOptionPane.ERROR_MESSAGE);
         } else {
             String taskToEdit = (String) taskTable.getValueAt(selectedTaskIndex, 0);
-            String editedTask = JOptionPane.showInputDialog(this, "Please Enter the Task", "Add New Task", JOptionPane.INFORMATION_MESSAGE).trim();
+            String editedTask = ((String)JOptionPane.showInputDialog(this, "Please Enter the Updated Task", "Edit Task", JOptionPane.INFORMATION_MESSAGE, null, null, taskToEdit)).trim();
             
             if(! "".equals(editedTask)) {
                 if(! TaskList.checkDuplicates(editedTask)) {
