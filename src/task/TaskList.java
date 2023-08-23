@@ -91,6 +91,13 @@ public class TaskList {
         taskList.clear();
     }
     
+    public static boolean editTask(String originalTask, String newTask) throws SQLException {
+        stmt = conn.createStatement();
+        stmt.execute("UPDATE tasks SET task = '" + newTask + "' WHERE task = '" + originalTask + "'");
+        taskList.set(taskList.indexOf(originalTask), newTask);
+        return true;
+    }
+    
     /**
      * Checks if the taskList already contains a particular task
      * @param task The task to run duplicacy check on
