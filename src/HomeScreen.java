@@ -18,6 +18,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import task.DBConnect;
 import task.TaskList;
@@ -86,6 +87,7 @@ public class HomeScreen extends javax.swing.JFrame {
         addTaskBtn = new javax.swing.JButton();
         deleteTaskBtn = new javax.swing.JButton();
         clearAllBtn = new javax.swing.JButton();
+        editTaskBtn = new javax.swing.JButton();
         taskContainer = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -192,21 +194,31 @@ public class HomeScreen extends javax.swing.JFrame {
             }
         });
 
+        editTaskBtn.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        editTaskBtn.setMnemonic('e');
+        editTaskBtn.setText("Edit Task");
+        editTaskBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editTaskBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonsPnlLayout = new javax.swing.GroupLayout(buttonsPnl);
         buttonsPnl.setLayout(buttonsPnlLayout);
         buttonsPnlLayout.setHorizontalGroup(
             buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonsPnlLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsPnlLayout.createSequentialGroup()
                 .addContainerGap(46, Short.MAX_VALUE)
-                .addGroup(buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsPnlLayout.createSequentialGroup()
+                .addGroup(buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(buttonsPnlLayout.createSequentialGroup()
+                        .addComponent(editTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(clearAllBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(buttonsPnlLayout.createSequentialGroup()
                         .addComponent(addTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(60, 60, 60)
-                        .addComponent(deleteTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsPnlLayout.createSequentialGroup()
-                        .addComponent(clearAllBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(133, 133, 133))))
+                        .addComponent(deleteTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(44, 44, 44))
         );
         buttonsPnlLayout.setVerticalGroup(
             buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,7 +228,9 @@ public class HomeScreen extends javax.swing.JFrame {
                     .addComponent(addTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(deleteTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(clearAllBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(buttonsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(clearAllBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editTaskBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -267,6 +281,7 @@ public class HomeScreen extends javax.swing.JFrame {
         taskTable.getTableHeader().setBackground(new Color(190, 190, 190));
         taskTable.setRowHeight(30);
         taskTable.setAutoCreateRowSorter(true);
+        taskTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         /**
          * Sets the ScrollPane to display the JTable
@@ -528,6 +543,36 @@ public class HomeScreen extends javax.swing.JFrame {
         optionsPopup.show(this, 300, 45);               
     }//GEN-LAST:event_optionsLblMouseClicked
 
+    private void editTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editTaskBtnActionPerformed
+        int selectedTaskIndex = taskTable.getSelectedRow();
+        
+        if(selectedTaskIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Please Select a Task to Edit!", "Edit Task", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String taskToEdit = (String) taskTable.getValueAt(selectedTaskIndex, 0);
+            String editedTask = JOptionPane.showInputDialog(this, "Please Enter the Task", "Add New Task", JOptionPane.INFORMATION_MESSAGE).trim();
+            
+            if(! "".equals(editedTask)) {
+                if(! TaskList.checkDuplicates(editedTask)) {
+                    try {
+                        if(TaskList.editTask(taskToEdit, editedTask)) {
+                            JOptionPane.showMessageDialog(this, "Task Updated Successfully!", "Edit Task", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "An error occured while updating the task!", "Edit Task", JOptionPane.ERROR_MESSAGE);
+                        }
+                        initalizeTaskTable();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(HomeScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "The Task already Exists! Cannot Update!", "Edit Task", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Please enter a Task to Update!", "Edit Task", JOptionPane.ERROR_MESSAGE);
+            }
+        } 
+    }//GEN-LAST:event_editTaskBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -567,6 +612,7 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JButton clearAllBtn;
     private javax.swing.JLabel closeLbl;
     private javax.swing.JButton deleteTaskBtn;
+    private javax.swing.JButton editTaskBtn;
     private javax.swing.JLabel optionsLbl;
     private javax.swing.JPopupMenu optionsPopup;
     private javax.swing.JScrollPane taskContainer;
