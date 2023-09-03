@@ -565,7 +565,20 @@ public class HomeScreen extends javax.swing.JFrame {
                         Logger.getLogger(HomeScreen.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "The Task already Exists! Cannot Update!", "Edit Task", JOptionPane.ERROR_MESSAGE);
+                    if(taskToEdit.equalsIgnoreCase(editedTask)) {
+                        try {
+                            if(TaskList.editTask(taskToEdit, editedTask)) {
+                                JOptionPane.showMessageDialog(this, "Task Updated Successfully!", "Edit Task", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(this, "An error occured while updating the task!", "Edit Task", JOptionPane.ERROR_MESSAGE);
+                            }
+                            initalizeTaskTable();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(HomeScreen.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "The Task already Exists! Cannot Update!", "Edit Task", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Please enter a Task to Update!", "Edit Task", JOptionPane.ERROR_MESSAGE);
